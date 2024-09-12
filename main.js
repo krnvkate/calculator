@@ -103,17 +103,22 @@ function evaluate(str) {
     }
     return stack.pop();
 }
-
+let resultButtonClicked = false;
 function clickHandler(event) {
     const screen = document.querySelector('.screen');
     const target = event.target;
+    if (target.classList.contains('digit') && resultButtonClicked == true) {
+        screen.textContent = '';
+    }
     if (target.classList.contains('digit') ||
     target.classList.contains('operation') ||
     target.classList.contains('bracket')) {
+        resultButtonClicked = false;
         screen.textContent += target.textContent;
     } else if (target.classList.contains('clear')) {
         screen.textContent = '';
     } else if (target.classList.contains('result')) {
+        resultButtonClicked = true;
         try {
             const expression = screen.textContent;
             const result = evaluate(compile(expression));
